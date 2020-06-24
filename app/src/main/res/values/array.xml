@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name = "spinner_do">
+        <item>BASIC</item>
+        <item>NAVI</item>
+        <item>SATELLITE</item>
+        <item>HYBRID</item>
+        <item>TERRAIN</item>
+        <item>NONEN</item>
+    </string-array>
+</resources>
