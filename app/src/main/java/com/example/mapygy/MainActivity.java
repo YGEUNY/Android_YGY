@@ -129,74 +129,41 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-      this.myMap = naverMap;
-      myMap.setMapType(NaverMap.MapType.Basic);
-      CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(35.945239, 126.682121));
-      naverMap.moveCamera(cameraUpdate);
-//      Marker marker1 = new Marker();
-//      marker1.setPosition(new LatLng(35.945239, 126.682121));
-//      marker1.setMap(naverMap);
-//      marker1.setIconTintColor(Color.RED);
-//
-//      infoWindow = new InfoWindow();
-//      marker1.setTag("우리학교 아카데미홀옹ㄹㄹ");
-//      marker1.setOnClickListener(overlay -> {
-//
-//          Marker marker = (Marker)overlay;
-//          if (marker.getInfoWindow() == null) {
-//              infoWindow.open(marker);
-//          } else {
-//              infoWindow.close();
-//          }
-//          return true;
-//      });
-//
-//  //    marker2.setTag("군산 시처어엉");
-//
-//     infoWindow.setAdapter(new InfoWindow.DefaultTextAdapter(context) {
-//          @NonNull
-//          @Override
-//          public CharSequence getText(@NonNull InfoWindow infoWindow) {
-//              return ((CharSequence)infoWindow.getMarker().getTag());
-//          }
-//      });
+        this.myMap = naverMap;
+        myMap.setMapType(NaverMap.MapType.Basic);
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(35.945239, 126.682121));
+        naverMap.moveCamera(cameraUpdate);
 
-
+        Marker marker1 = new Marker();
+        infoWindow = new InfoWindow();
         myMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
-                boolean mark = true;
-                String text = "latitude = "+latLng.latitude+" longitude = "+latLng.longitude;
-                Marker marker1 = new Marker();
+                String text = "latitude = " + latLng.latitude + " longitude = " + latLng.longitude;
+
                 marker1.setPosition(new LatLng(latLng.latitude, latLng.longitude));
                 marker1.setMap(naverMap);
                 marker1.setIconTintColor(Color.RED);
 
+                marker1.setOnClickListener(overlay -> {
+                    Marker marker = (Marker) overlay;
+                    if (marker.getInfoWindow() == null) {
+                        infoWindow.open(marker);
+                    } else {
+                        infoWindow.close();
+                    }
+                    return true;
+                });
 
+                infoWindow.setAdapter(new InfoWindow.DefaultTextAdapter(context) {
+                    @NonNull
+                    @Override
+                    public CharSequence getText(@NonNull InfoWindow infoWindow) {
+                        return text;
+                    }
+                });
 
-//                    infoWindow = new InfoWindow();
-//                    marker1.setOnClickListener(overlay -> {
-//                        Marker marker = (Marker)overlay;
-//                        if (marker.getInfoWindow() == null) {
-//                            infoWindow.open(marker);
-//                        } else {
-//                            infoWindow.close();
-//                        }
-//                        return true;
-//                    });
-
-//                    infoWindow.setAdapter(new InfoWindow.DefaultTextAdapter(context) {
-//                        @NonNull
-//                        @Override
-//                        public CharSequence getText(@NonNull InfoWindow infoWindow) {
-//                            return text;
-//                        }
-//                    });
-
-                    Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
-
-
-
+                //     Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
             }
         });
     }
