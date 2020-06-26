@@ -1,82 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+        <!--        <Button-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="end|bottom"-->
+        <!--            android:text="CADSTRAL"-->
+        <!--            android:id="@+id/button"/>-->
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="MissingConstraints">
-    <fragment
-        android:id="@+id/map"
-        android:name="com.naver.maps.map.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <fragment
+            android:id="@+id/map"
+            android:name="com.naver.maps.map.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TableLayout
+    <TableLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/choice"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/BasicMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            >
+            android:text="Basic" />
 
-            <Button
-                android:id="@+id/BasicMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Basic"
-                android:visibility="gone"
-                />
-            <Button
-                android:id="@+id/NaviMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Navi"
-                android:visibility="gone"
-                />
+        <Button
+            android:id="@+id/NaviMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Navi" />
 
-            <Button
-                android:id="@+id/SatelliteMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Satellite"
-                android:visibility="gone"/>
+        <Button
+            android:id="@+id/SatelliteMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Satellite" />
 
-            <Button
-                android:id="@+id/HybridMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hybrid"
-                android:visibility="gone"/>
+        <Button
+            android:id="@+id/HybridMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hybrid" />
 
-            <Button
-                android:id="@+id/TerrainMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Terrain"
-                android:visibility="gone"/>
+        <Button
+            android:id="@+id/TerrainMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terrain" />
 
-            <Button
-                android:id="@+id/NoneMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="None"
-                android:visibility="gone"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/choice"
-                android:text="Choice"/>
-        </TableLayout>
+        <Button
+            android:id="@+id/NoneMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="None" />
+    </TableLayout>
 
-   </FrameLayout>
-
-
-
+    <Button
+        android:id="@+id/choice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Choice"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
