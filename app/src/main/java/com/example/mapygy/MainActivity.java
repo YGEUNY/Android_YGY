@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         myMap.setMapType(NaverMap.MapType.Basic);
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(35.945239, 126.682121));
         naverMap.moveCamera(cameraUpdate);
+        //////
 
         Marker marker1 = new Marker();
         infoWindow = new InfoWindow();
