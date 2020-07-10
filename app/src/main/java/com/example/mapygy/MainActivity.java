@@ -2,42 +2,46 @@ package com.example.mapygy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuItemImpl;
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TableLayout;
-import android.widget.Toast;
+
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.Symbol;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
-import com.naver.maps.map.overlay.Overlay;
+import com.naver.maps.map.overlay.PolygonOverlay;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
+
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     ArrayAdapter<CharSequence> adapter;
     NaverMap myMap;
     Context context = this;
     boolean boo;
-    Button btn0, btn1,btn2,btn3,btn4,btn5,btn6;
+    Button btn0, btn1,btn2,btn3,btn4,btn5,btn6, mapViewBtn;
     InfoWindow infoWindow;
     TableLayout visBtn;
     @Override
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         btn5 = findViewById(R.id.NoneMap);
         btn6 = findViewById(R.id.choice);
         visBtn = findViewById(R.id.buttonLayout);
+        mapViewBtn = findViewById(R.id.mapViewBtn);
 
         btn6.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,31 +130,53 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                }
 //            }
 //        });
+        mapViewBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),MapViewActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         this.myMap = naverMap;
+     //   MyAsyncTask.execute();
         myMap.setMapType(NaverMap.MapType.Basic);
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(35.945239, 126.682121));
         naverMap.moveCamera(cameraUpdate);
-        //////
 
-        Marker marker1 = new Marker();
-        infoWindow = new InfoWindow();
+        Marker[] marker = new Marker[100];
+
         myMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
+                Marker mark = new Marker();
+//                MyAsyncTask async = new MyAsyncTask();
+//
+//                async.execute(latLng);
+//
+//                String json = null;
+//                //   new MyAsyncTask().execute();
+//                try {
+//                    json = async.execute(latLng).get();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
+//                String text = json;
                 String text = "latitude = " + latLng.latitude + " longitude = " + latLng.longitude;
 
-                marker1.setPosition(new LatLng(latLng.latitude, latLng.longitude));
-                marker1.setMap(naverMap);
-                marker1.setIconTintColor(Color.RED);
-
-                marker1.setOnClickListener(overlay -> {
-                    Marker marker = (Marker) overlay;
-                    if (marker.getInfoWindow() == null) {
-                        infoWindow.open(marker);
+                mark.setPosition(new LatLng(latLng.latitude, latLng.longitude));
+                mark.setMap(naverMap);
+                mark.setIconTintColor(Color.RED);
+                infoWindow = new InfoWindow();
+                mark.setOnClickListener(overlay -> {
+                    Marker markerInfo = (Marker) overlay;
+                    if (markerInfo.getInfoWindow() == null) {
+                        infoWindow.open(markerInfo);
                     } else {
                         infoWindow.close();
                     }
@@ -164,9 +191,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
 
-                //     Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
+                PolygonOverlay polygon = new PolygonOverlay();
+                polygon.setCoords(Arrays.asList(
+                        new LatLng(latLng.latitude, latLng.longitude)
+                ));
+                polygon.setMap(naverMap);
             }
         });
     }
-
 }
+
